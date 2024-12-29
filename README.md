@@ -1,1 +1,1 @@
-A simple functional e-commerce for medical products built with symfony2 made for mobile apps mainly
+A simple functional e-commerce website for medical products built with symfony2 made for mobile apps mainly
