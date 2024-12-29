@@ -1,0 +1,27 @@
+{% extends "::base.html.twig" %}
+{% block title %}Commandes | Orang-Medic{% endblock %}
+{% block body %}
+    <div class="main_bg">
+        <div class="wrap">
+            <div class="main">
+                <!-- start grids_of_3 -->
+                <div class="grids_of_3">
+                    {% for commande in commandes %}
+                        <div class="grid1_of_3">
+                            <img alt="commande" src="{{ asset("images/colis.jpg") }}" />
+                            <a href="#">
+                                <h3>Commandes : {{ commande.idcmd }}</h3>
+                            </a>
+                        </div>
+                        <div class="grid1_of_3">
+                            <h3>Total produits : <h4> {{ commande.qtetotale }}</h4></h3>  
+                        </div>
+                    {% endfor %}
+                    <div class="clear"></div>
+                </div>
+                <div class="clear"></div>
+            </div>
+        </div>
+    </div>  
+
+{% endblock %}

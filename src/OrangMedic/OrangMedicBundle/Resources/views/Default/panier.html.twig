@@ -1,0 +1,56 @@
+{% extends "::base.html.twig" %}
+{% block title %}Panier | Orang-Medic{% endblock %}
+{% block body %}
+    <div class="top_bg">
+        <div class="main_top">
+            <h4 class="style">Panier</h4>
+        </div>
+    </div>
+    <!-- start main -->
+    <div class="main_bg">
+        <div class="wrap">
+            <div class="main">
+                <!-- start grids_of_3 -->
+                <div class="grids_of_3">
+                    {% set panier = app.request.session.get("panier") %}
+                    {% if panier %}
+                        {% set produits = panier['prods'] %}
+                        {% for produit in produits %}
+                            <div class="grid1_of_3">
+                                <img alt="image de produit" src="{{ asset(produit.image) }}" />
+                                <a href="{{ path("orang_medic_details", { 'nomProd' : produit.libelle }) }}">
+                                    <h3> {{ produit.libelle  }}</h3>
+                                </a>
+                                <a href="{{ path("supprimer", { 'nomProd' : produit.libelle }) }}" class="X" title="enlever ce produit">X</a>
+                                <span class="price">{{ (produit.prixAchete)|number_format(3, ".", ",")  }}</span>
+                            </div>
+                            <div class="grid1_of_3">
+                                <form action="{{ path("ajouter_au_panier", { 'nomProd' : produit.libelle }) }}" method="get">
+                                    <input type="submit" value="ajouter" /> 
+                                    <input title="{{ produit.qteAchete }} {{ produit.libelle }}" name="qte" type="number" max="{{ produit.stock  }}" min="1" value="{{ produit.qteAchete }}" /> 
+                                </form>
+                            </div>
+                        {% endfor %}  
+                        <div class="grid1_of_3">
+                            <h3>Total : <h4>{{ panier['total']|number_format(3, ".", ",") }} TND</h4></h3>  
+                        </div>
+                        {% set c = app.request.session.get("client") %}
+                        {% if c %}
+                            <div class="registration_form">
+                            <form id="registration_form" action="{{ path('commander') }}" method="get">
+                            <input type="submit" value="Commander" /> 
+                            </form> 
+                            </div>
+                        {% else %}
+                            <div class="grid1_of_3">
+                                <h3>Vous devez être identifié pour pouvoir acheter</h3>
+                            </div>
+                        {% endif %}  
+                        {% endif %}  
+                        <div class="clear"></div>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+            </div>
+        </div>  
+        {% endblock %}

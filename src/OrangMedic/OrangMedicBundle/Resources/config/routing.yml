@@ -1,0 +1,86 @@
+orang_medic_homepage:
+    path:     /
+    defaults: { _controller: OrangMedicBundle:Default:index }
+    
+orang_medic_inscription:
+    path:     /inscription
+    defaults: { _controller: OrangMedicBundle:Default:register }
+    
+support:
+    path:     /support
+    defaults: { _controller: OrangMedicBundle:Default:support }
+
+orang_medic_offresetnv:
+    path:     /offresEtNouveautes
+    defaults: { _controller: OrangMedicBundle:Default:offresNV }
+    
+
+orang_medic_connexion:
+    path:     /connexion
+    defaults: { _controller: OrangMedicBundle:Default:login  }
+    
+connexion:
+    path:     /login
+    defaults: { _controller: OrangMedicBundle:Compte:login  }
+    
+enregistrer:
+    path:     /enregistrer
+    defaults: { _controller: OrangMedicBundle:Compte:register  }
+    
+mesCommandes:
+    path:     /mesCommandes
+    defaults: { _controller: OrangMedicBundle:Compte:commandes  }
+    
+deconnexion:
+    path:     /deconnecter
+    defaults: { _controller: OrangMedicBundle:Compte:exit  }
+    
+orang_medic_produits:
+    path:     /produits/{nom}/{prod}
+    defaults: { _controller: OrangMedicBundle:Default:products  }
+    requirements:
+        prod: .+
+        
+orang_medic_contact:
+    path:     /contact
+    defaults: { _controller: OrangMedicBundle:Default:contact  }
+
+orang_medic_details:
+    path:     /details/{nomProd}
+    defaults: { _controller: OrangMedicBundle:Default:details  }
+    
+ajouter_au_panier:
+    path:     /ajouter/{nomProd}
+    defaults: { _controller: OrangMedicBundle:Panier:ajouter  }
+    requirements:
+        nomProd: .+
+        
+lister:
+    path:     /lister
+    defaults: { _controller: OrangMedicBundle:Panier:lister  }
+
+supprimer:
+    path:     /supprimer/{nomProd}
+    defaults: { _controller: OrangMedicBundle:Panier:supprimer  }
+    requirements:
+        nomProd: .+
+        
+commander:
+    path:     /commander
+    defaults: { _controller: OrangMedicBundle:Default:checkout  }
+    
+enregistrerCommande:
+    path:     /enregistrerCommander
+    defaults: { _controller: OrangMedicBundle:Compte:enregistrerCom  }
+        
+Email:
+    path:     /email
+    defaults: { _controller: OrangMedicBundle:Default:mail  }
+    
+newsletter:
+    path:     /newsletter
+    defaults: { _controller: OrangMedicBundle:Default:newsletter  }
+    
+profil:
+    path:     /profil
+    defaults: { _controller: OrangMedicBundle:Compte:profil  }

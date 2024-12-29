@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="OrangMedic\OrangMedicBundle\Entity\Commercial" table="commercial">
+    <indexes>
+      <index name="fkcommercial" columns="id_admin"/>
+    </indexes>
+    <id name="emailCommercial" type="string" column="email_commercial" length="200">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="nom" type="string" column="nom" length="70" nullable="true"/>
+    <field name="prenom" type="string" column="prenom" length="70" nullable="true"/>
+    <field name="sexe" type="string" column="sexe" length="10" nullable="true"/>
+    <field name="mp" type="string" column="MP" length="700" nullable="true"/>
+    <field name="photo" type="string" column="photo" length="100" nullable="true"/>
+    <field name="tel" type="string" column="tel" length="30" nullable="true"/>
+    <field name="status" type="string" column="status" length="10" nullable="true"/>
+    <many-to-one field="idAdmin" target-entity="Administrateur">
+      <join-columns>
+        <join-column name="id_admin" referenced-column-name="id_admin"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-many field="libelle" target-entity="Produits" mapped-by="emailCommercial"/>
+  </entity>
+</doctrine-mapping>

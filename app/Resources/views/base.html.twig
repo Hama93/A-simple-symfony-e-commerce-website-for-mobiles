@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>{% block title %}{% endblock %}</title>
+        {% block stylesheets %}
+            <link href={{ asset("css/style.css") }} media="all" rel="stylesheet" type="text/css" />
+        {% endblock %}
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+    </head>
+    <body>
+        <div id="fb-root"></div>
+        <script>(function (d, s, id) {
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id))
+                    return;
+                js = d.createElement(s);
+                js.id = id;
+                js.src = "//connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v2.3";
+                fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));</script>
+            {% block header %}
+            <div class="top_bg">
+                <div class="header">
+                    {% set c = app.request.session.get("client") %}
+                    {% if c %}
+                        <div class="logo">
+                            <a  title="Accueil" href={{ path("orang_medic_homepage") }}>Orang-Medic</a>
+                            <h4>Bienvenue {{ c.nom }}</h4>
+                            <figure>
+                                <a  title="afficher mon profil" href="{{ path("profil") }}"><img src="{{ asset(c.photo) }}" id="cphoto" /></a>
+                            </figure>
+                        </div>
+                                <span><a href="{{ path("deconnexion") }}" class="a1" >Déconnecter</a></span>
+                                <span><a href="{{ path("mesCommandes") }}" class="a2" >mes Commandes</a></span>
+                    {% else %}
+                        <div class="logo">
+                            <a href={{ path("orang_medic_homepage") }}>Orang-Medic</a>
+                        </div>
+                        <div class="log_reg">
+                            <ul>
+                                <li><a href={{ path("orang_medic_connexion") }}>Connecter</a> </li>
+                                <span class="log"> | </span>
+                                <li><a href={{ path("orang_medic_inscription") }}>Inscription</a> </li>								   
+                                <div class="clear"></div>
+                            </ul>
+                        </div>	
+                    {% endif %}       
+                    <div class="clear"></div>
+                </div>	
+            </div>
+            <div class="header_btm">
+                <div class="drp-dwn">
+                    <select   onchange="window.location = this.options[this.selectedIndex].value">
+                        <option id="uni" selected>Naviguer le site :</option>
+                        <option value={{ path("orang_medic_homepage") }}>Accueil</option>
+                        <optgroup label="Catégories :">
+                            {% for categorie in categories %}
+                                <option value={{ path("orang_medic_produits",{ 'nom' : 'categorie',  'prod' : categorie.nomCategorie }) }}>{{ categorie.nomCategorie }}</option>
+                            {% endfor %}  
+                        </optgroup>
+                        <optgroup label="Marques :">
+                            {% for marque in marques %}
+                                <option value={{ path("orang_medic_produits", { 'nom' : 'marque',  'prod' : marque.nomMarque }) }}>{{ marque.nomMarque }}</option>
+                            {% endfor %} 
+                        </optgroup>
+                        <option value={{ path("orang_medic_contact") }}>Contact</option>
+                    </select>
+                </div>
+                <div class="header_right">
+                    {% set panier = app.request.session.get("panier") %}
+                    <ul>
+                        {% if panier %}
+                            <li><a href="{{ path("lister") }}"><i title="{{ panier['qte'] }} produit(s) dans votre panier"  class="cart"></i><span>{{ panier['qte'] }}</span></a></li>
+                                    {% else %}
+                            <li><a href="#"><i title="votre panier est vide" class="cart"></i><span>0</span></a></li>
+                                    {% endif %}
+                    </ul>
+                </div>
+                <div class="clear"></div>
+            </div>
+        {% endblock %}
+    {% block body %}{% endblock %}
+    {% block footer %}
+        <!-- start footer -->
+        <div class="footer_top">
+            <div class="footer">
+                <!-- start grids_of_3 -->
+                <div class="span_of_3">
+                    <div class="span1_of_3">
+                        <h3>facebook widget</h3>
+                        <div class="fb-comments" data-href="http://developers.facebook.com/docs/plugins/comments/" data-numposts="5" data-width="100%" data-colorscheme="light"></div>
+                    </div>
+                    <div class="span1_of_3">
+                        <h3>flickr widget</h3>
+                        <div style='position: relative; padding-bottom: 101%; height: 0; overflow: hidden;'><iframe id='iframe' src='http://flickrit.com/slideshowholder.php?height=100&size=big&keyword=medical&thumbnails=0&transition=0&layoutType=responsive&sort=0' scrolling='no' frameborder='0'style='width:100%; height:100%; position: absolute; top:0; left:0;' ></iframe></div>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+            </div>
+        </div>
+        <div class="footer_mid">
+            <div class="footer">
+                <div class="f_search">
+                    <form action="{{ path("newsletter") }}" method="get">
+                        {% if existe is defined and existe=='existe' %}
+                            <input type="email" name="newsletter" placeholder="vous êtes déjà inscrit" required="required"/>
+                        {% elseif existe is defined and existe=='enregistré' %}
+                            <input type="email" name="newsletter" placeholder="vous êtes maintenant inscrit" required="required"/>
+                        {% else %}
+                            <input type="email" name="newsletter" placeholder="Entrer un email pour newsletter" required="required"/>
+                        {% endif %}
+                        <input type="submit" value=""/>
+                    </form>
+                </div>
+                <div class="soc_icons">
+                    <ul>
+                        <li><div class="fb-share-button icon1" data-href="{{ app.request.uri }}" data-layout="button"></div></li>
+                        <li><a href="https://twitter.com/share" class="twitter-share-button icon2" data-count="none">Tweet</a> <script>!function (d, s, id) {
+                                var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https';
+                                if (!d.getElementById(id)) {
+                                    js = d.createElement(s);
+                                    js.id = id;
+                                    js.src = p + '://platform.twitter.com/widgets.js';
+                                    fjs.parentNode.insertBefore(js, fjs);
+                                }
+                            }(document, 'script', 'twitter-wjs');</script></li>
+                        <li><div class="g-plusone icon3" data-size="medium" data-annotation="none"></div></li>
+                        <li><script src="//platform.linkedin.com/in.js" type="text/javascript"> lang: en_US</script>
+                            <script class="icon4" type="IN/Share"></script></li>
+                    </ul>	
+                </div>
+                <div class="clear"></div>
+            </div>
+        </div>
+        <!-- start footer -->
+        <div class="footer_bg">
+            <div class="footer">
+                <div class="f_nav1">
+                    <ul>
+                        <li><a href="{{ path("orang_medic_homepage") }}">Accueil /</a></li>
+                        <li><a href="{{ path("support") }}">Support /</a></li>
+                        <li><a href="{{ path("orang_medic_contact") }}">Nous contacter</a></li>
+                    </ul>
+                </div>
+                <div class="copy">
+                    <p class="link"><span>© All rights reserved | Template by&nbsp;<a href="http://w3layouts.com/"> W3Layouts</a></span></p>
+                </div>
+                <div class="clear"></div>
+            </div>
+        </div>
+    {% endblock %}
+    {% block javascripts %}
+    {% endblock %}
+    <script type="text/javascript">
+        window.___gcfg = {lang: 'fr'};
+
+        (function () {
+            var po = document.createElement('script');
+            po.type = 'text/javascript';
+            po.async = true;
+            po.src = 'https://apis.google.com/js/platform.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(po, s);
+        })();
+    </script>
+</body>
+</html>

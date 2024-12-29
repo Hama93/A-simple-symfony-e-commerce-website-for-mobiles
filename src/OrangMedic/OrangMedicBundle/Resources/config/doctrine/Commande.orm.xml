@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="OrangMedic\OrangMedicBundle\Entity\Commande" table="commande">
+    <indexes>
+      <index name="FKCommande" columns="email_client"/>
+    </indexes>
+    <id name="idcmd" type="string" column="idcmd" length="500">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="prix" type="float" column="prix" precision="10" scale="0" nullable="true"/>
+    <field name="qtetotale" type="integer" column="qteTotale" nullable="true"/>
+    <field name="datedecommande" type="datetime" column="datedecommande" nullable="true"/>
+    <field name="etat" type="string" column="etat" length="30" nullable="true"/>
+    <field name="adresse" type="string" column="adresse" length="500" nullable="true"/>
+    <many-to-one field="emailClient" target-entity="Client">
+      <join-columns>
+        <join-column name="email_client" referenced-column-name="email_client"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-many field="libelle" target-entity="Produits" inversed-by="idcmd">
+      <join-table name="commandeclient">
+        <join-columns>
+          <join-column name="idcmd" referenced-column-name="idcmd"/>
+        </join-columns>
+        <inverse-join-columns>
+          <join-column name="libelle" referenced-column-name="libelle"/>
+        </inverse-join-columns>
+      </join-table>
+    </many-to-many>
+  </entity>
+</doctrine-mapping>

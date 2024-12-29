@@ -1,0 +1,46 @@
+{% extends "::base.html.twig" %}
+{% block title %}Accueil | Orang-Medic{% endblock %}
+{% block body %}
+    <!-- start image1_of_3 -->
+    <div class="top_bg">
+        <div class="main1">
+            <div class="image1_of_3">
+                <img src={{ asset("images/new.jpg") }} alt=""/>
+                <a href="{{ path("orang_medic_offresetnv") }}"><span class="tag">offres et nouveautés</span></a>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+    <!-- start main -->
+    <div class="main_bg">
+        <div class="main">
+            <div class="top_main">
+                <h2>Produits en vedettes</h2>
+                <div class="clear"></div>
+            </div>
+            <!-- start grids_of_3 -->
+            <div class="grids_of_3">
+                {% for produit in produits %}
+                <div class="grid1_of_3">
+                    <a href="{{ path("orang_medic_details", { 'nomProd' : produit.libelle }) }}">
+                        <img alt="image de produit" src="{{ asset(produit.image) }}" />
+                        <h3> {{ produit.libelle  }}</h3>
+                         {% if produit.etat=='nouveau' %}
+                         <span class="price1 bg1">Nouveau</span>
+                         {% endif %}
+                         {% for p in produit.idPromo %}
+                         <span class="price1 bg">en Promo</span>
+                         {% endfor %}
+                         {% if produit.stock<=0 %}
+                         <span class="price1 bg2">Non Disponible</span>
+                         {% endif %}
+                         <span class="price">{{ (produit.prixAchete)|number_format(3, ".", ",")  }}</span>
+                    </a>
+                </div>
+                {% endfor %}        
+                <div class="clear"></div>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+{% endblock %}

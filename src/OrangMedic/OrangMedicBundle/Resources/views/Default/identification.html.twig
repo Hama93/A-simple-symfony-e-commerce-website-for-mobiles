@@ -1,0 +1,60 @@
+{% extends "::base.html.twig" %}
+{% block title %}Connecter vous | Orang-Medic{% endblock %}
+{% block body %}
+    <div class="top_bg">
+        <div class="main_top">
+            <h4 class="style">Connexion</h4>
+        </div>
+    </div>
+    <!-- start main -->
+    <div class="main_bg">
+        <div class="main">
+            <div class="login_left">
+                <h3>nouveau chez Orang-Medic-Mobile ?</h3>
+                <p>Créer un compte maintenant et bénificiez de nos services.<br />Même si vous avez un compte sur Orang-Medic veuillez créer un autre sur Orang-Medic-Mobile</p>
+                <div class="btn">
+                    <form>
+                        <a href ={{ path('orang_medic_inscription') }}>Créer mon compte mobile</a>
+                    </form>
+                </div>
+            </div>
+            <div class="login_left">
+                <h3>Déjà enregistré? Connectez vous ici</h3>
+                <p>Si vous êtes déjà inscrit sur Orang-Medic-Mobile, vous pouvez s'identifiez sur le site si dessous.</p>
+                <!-- start registration -->
+                <div class="registration">
+                    <div class="registration_left">
+                        <div class="registration_form">
+                            <!-- Form -->
+                            <form id="registration_form" action="{{ path('connexion') }}" method="get">
+                                <div>
+                                    <label>
+                                        <input name="email" placeholder="adresse email" type="email" tabindex="3" required="required">
+                                    </label>
+                                </div>
+                                <div>
+                                    <label>
+                                        <input name="mp" placeholder="mot de passe" type="password" tabindex="4" required="required">
+                                    </label>
+                                </div>
+                                {% if message  %} 
+                                <div>
+                                    <label>
+                                        <p>{{ message }}</p>
+                                    </label>
+                                </div>
+                                {% endif %}
+                                <div>
+                                    <input type="submit" value="S'identifier" id="register-submit">
+                                </div>
+                            </form>
+                            <!-- /Form -->
+                        </div>
+                    </div>
+                </div>
+                <!-- end registration -->
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+{% endblock %}

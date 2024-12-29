@@ -1,0 +1,4 @@
+orang_medic:
+    resource: "@OrangMedicBundle/Resources/config/routing.yml"
+    prefix:   /
+

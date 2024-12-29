@@ -1,0 +1,113 @@
+{% extends "::base.html.twig" %}
+{% block title %}Inscription | Orang-Medic{% endblock %}
+{% block body %}
+    <!-- start top_bg -->
+    <div class="top_bg">
+        <div class="main_top">
+            <h4 class="style">Inscription</h4>
+        </div>
+    </div>
+    <!-- start main -->
+    <div class="main_bg">
+        <div class="main">
+            <div class="login_left">
+                <h3>Identification client</h3>
+                <p>Si vous avez déjà un compte, veuillez vous identifier.</p>
+                <!-- start registration -->
+                <div class="registration">
+                    <div class="registration_left">
+                        <div class="registration_form">
+                            <!-- Form -->
+                            <form id="registration_form" action="{{ path('connexion') }}" method="get">
+                                <div>
+                                    <label>
+                                        <input name="email"  placeholder="adresse email" type="email" tabindex="3" required="required">
+                                    </label>
+                                </div>
+                                <div>
+                                    <label>
+                                        <input name="mp" placeholder="mot de passe" type="password" tabindex="4" required="required">
+                                    </label>
+                                </div>						
+                                <div>
+                                    <input type="submit" value="S'identifier" id="register-submit">
+                                </div>
+                            </form>
+                            <!-- /Form -->
+                        </div>
+                    </div>
+                </div>
+                <!-- end registration -->
+            </div>
+            <div class="login_left">
+                <h3>Nouveau chez nous? veuillez nous joindre et devenez un client</h3>
+                <p>N'hésitez pas, joiniez nous maintenant et soyez le bienvene chez Orang-Medic.</p>
+                <div class="registration_left">
+                    <div class="registration_form">
+                        <!-- Form -->
+                        <form onsubmit="return verifier()" id="registration_form" action="{{ path('enregistrer') }}" method="get">
+                            <div>
+                                <label>
+                                    <input name="nom" placeholder="nom" type="text" tabindex="1" required="" autofocus="">
+                                </label>
+                            </div>
+                            <div>
+                                <label>
+                                    <input name="prenom" placeholder="prénom" type="text" tabindex="2" required="" autofocus="">
+                                </label>
+                            </div>
+                            <div>
+                                <label>
+                                    <input name="email" placeholder="adresse email" type="email" tabindex="3" required="required">
+                                </label>
+                            </div>
+                            <div>
+                                <label>
+                                    <input name="mp" placeholder="mot de passe" type="password" tabindex="4" required="required" id="passe1">
+                                </label>
+                            </div>						
+                            <div>
+                                <label>
+                                    <input placeholder="ré-entrer le mot de passe" type="password" tabindex="4" required="required" id="passe2">
+                                </label>
+                                <label>
+                                     <p id="erreur"></p>
+                                </label>
+                            </div>	
+                            {% if messageInscrit is defined and messageInscrit  %} 
+                                <div>
+                                    <label>
+                                        <p>{{ messageInscrit }}</p>
+                                    </label>
+                                </div>
+                                {% endif %}
+                            <div>
+                                <input type="submit" value="creer compte" id="register-submit">
+                            </div>
+                        </form>
+                        <!-- /Form -->
+                    </div>
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+<script type="text/javascript">
+function verifier(){
+        var p1=document.getElementById("passe1");
+        var p2=document.getElementById("passe2");
+        if(p2.value!=p1.value){
+        return false;
+        }
+        if(((p1.value).length)<9)
+        {
+        var m=document.getElementById("erreur");
+        m.innerHTML='mot de passe doit être 9 caractéres au minimum';
+        return false;
+        }
+        return true;
+}
+</script>
+ {% endblock %}

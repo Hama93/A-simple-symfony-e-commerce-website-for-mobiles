@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="OrangMedic\OrangMedicBundle\Entity\Administrateur" table="administrateur">
+    <indexes>
+      <index name="fkadmin" columns="emailN"/>
+    </indexes>
+    <id name="idAdmin" type="string" column="id_admin" length="50">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="email" type="string" column="email" length="60" nullable="true"/>
+    <field name="nom" type="string" column="nom" length="50" nullable="true"/>
+    <field name="mp" type="string" column="MP" length="700" nullable="true"/>
+    <field name="photo" type="string" column="photo" length="50" nullable="true"/>
+    <many-to-one field="emailn" target-entity="Newsletter">
+      <join-columns>
+        <join-column name="emailN" referenced-column-name="emailN"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>

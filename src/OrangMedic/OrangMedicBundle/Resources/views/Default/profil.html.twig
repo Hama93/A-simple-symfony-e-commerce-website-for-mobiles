@@ -1,0 +1,88 @@
+{% extends "::base.html.twig" %}
+{% block title %}Profil | Orang-Medic{% endblock %}
+{% block body %}
+    {% set c = app.request.session.get("client") %}
+    {% if c %}
+        <div class="top_bg">
+            <div class="main_top">
+                <h2 class="style">Profil : {{ c.nom }} {{ c.prenom }}</h2>
+            </div>
+        </div>
+        <div class="main_bg">
+            <div class="main">
+                <!-- start content -->
+                <div class="single">
+                    <!-- start span1_of_1 -->
+                    <div class="left_content">
+                        <div class="span1_of_1">
+                            <!----start-img-cursual---->
+                            <div id="products">
+                                <div class="slides_container">
+                                    <img class="a" id="img1" src="{{ asset(c.photo) }}" alt="photo de client" />
+                                    <form action="{{ path("profil") }}" method="POST" enctype="multipart/form-data">
+                                        <input title="changer cette photo" type="file" name="upload" accept='image/*' required="required" onchange="this.form.submit()" />
+                                    </form>
+                                </div>
+                                <div class="registration_form">
+                                    <!-- Form -->
+                                    {% set c = app.request.session.get("client") %}
+                                    <form id="registration_form" action="{{ path('profil') }}" method="GET">
+                                        <div>
+                                            <label>
+                                                <input name="nom"  placeholder="{{ c.nom }}" type="text" tabindex="3" title="changer mon nom" >
+                                            </label>
+                                        </div>
+                                        <div>
+                                            <label>
+                                                <input name="prenom" placeholder="{{ c.prenom }}" type="text" title="changer prénom" tabindex="4" >
+                                            </label>
+                                        </div>				
+                                        <div>
+                                            <label>
+                                                <input name="tel" placeholder="{{ c.tel }}" type="text" title="changer mon numéro de téléphone" tabindex="4" >
+                                            </label>
+                                        </div>
+                                        <div>
+                                            <label>
+                                                <input name="mp" type="password" placeholder="{{ c.mp }}" title="changer mon mot de passe" tabindex="4" >
+                                            </label>
+                                        </div>
+                                        <div>
+                                            <label>
+                                                <select name="sexe" size="1">
+                                                    {% if c.sexe and c.sexe=="homme" %}
+                                                        <option selected>homme</option>
+                                                        <option>femme</option>
+                                                    {% elseif c.sexe and c.sexe=="femme" %}
+                                                        <option>homme</option>
+                                                        <option selected>femme</option>
+                                                    {% else %}
+                                                        <option selected></option>
+                                                        <option>homme</option>
+                                                        <option>femme</option>
+                                                    {% endif %}
+                                                </select>
+                                            </label>
+                                        </div>
+                                            <div>
+                                                <input type="submit" value="Enregistrer" id="register-submit">
+                                            </div>
+                                    </form>
+                                    <!-- /Form -->
+                                </div>
+                                <div class="clear"></div>
+                            </div>
+                            <!----//End-img-cursual---->
+                        </div>
+                        <!-- start span1_of_1 -->
+
+                        <div class="clear"></div>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <script>window.location.href = "http://localhost/Orang-Medic-Mobile/web/app_dev.php"</script>
+    {% endif %}
+{% endblock %}

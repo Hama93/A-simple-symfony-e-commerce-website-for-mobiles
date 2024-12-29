@@ -1,0 +1,53 @@
+{% extends "::base.html.twig" %}
+{% block title %}Détails produit | Orang-Medic{% endblock %}
+{% block body %}
+    <div class="top_bg">
+        <div class="main_top">
+            <h2 class="style">Produit :</h2>
+        </div>
+    </div>
+    <!-- start main -->
+    <div class="main_bg">
+        <div class="main">
+            <!-- start content -->
+            <div class="single">
+                <!-- start span1_of_1 -->
+                <div class="left_content">
+                    <div class="span1_of_1">
+                        <!----start-img-cursual---->
+                        <div id="products">
+                            <div class="slides_container">
+                                <img class="a" id="img1" src="{{ asset(produit.image) }}" alt="" rel="images/zoom/slide_pic1.jpg" />
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                        <!----//End-img-cursual---->
+                    </div>
+                    <!-- start span1_of_1 -->
+                    <div class="span1_of_1_des">
+                        <div class="desc1">
+                            {% set prd = produit.idPromo %}
+                            <h3>{{ produit.libelle }}</h3>
+                            <h5>{% if produit.prix!=produit.prixAchete %} Prix Promo : {% else %} Prix : {% endif %}{{ (produit.prixAchete)|number_format(3, ".", ",") }} TND</h5>
+                            <div class="available">
+                                <div class="btn_form">
+                                    <form action="{{ path("ajouter_au_panier", { 'nomProd' : produit.libelle }) }}" method="get">
+                                        <input type="submit" value="Ajouter au panier" />
+                                    </form>
+                                </div>
+                                 {% set pd = produit.description|split("<br />") %}
+                                {% for chaine in pd %}
+                                     {% for souschaine in chaine|split("<br/>") %}
+                                <p>{{ souschaine }}</p>
+                                {% endfor %}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+                <div class="clear"></div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
